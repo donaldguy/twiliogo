@@ -25,14 +25,14 @@ type IncomingPhoneNumber struct {
 	StatusCallback       string      `json:"status_callback"`
 	StatusCallbackMethod string      `json:"status_callback_method"`
 	VoiceCallerIdLookup  bool        `json:"voice_caller_id_lookup"`
-	VoiceApplicationId   string      `json:"voice_application_id"`
+	VoiceApplicationSid  string      `json:"voice_application_sid"`
 	DateCreated          string      `json:"date_created"`
 	DateUpdated          string      `json:"date_updated"`
 	SmsUrl               string      `json:"sms_url"`
 	SmsMethod            string      `json:"sms_method"`
 	SmsFallbackUrl       string      `json:"sms_fallback_url"`
 	SmsFallbackMethod    string      `json:"sms_fallback_method"`
-	SmsApplicationId     string      `json:"sms_application_id"`
+	SmsApplicationSid    string      `json:"sms_application_sid"`
 	Capabilities         Capabilites `json:"capabilities"`
 	ApiVersion           string      `json:"api_version"`
 	Uri                  string      `json:"uri"`
@@ -109,6 +109,9 @@ func UpdatePhoneNumberFields(client Client, number *IncomingPhoneNumber, voiceCa
 	if len(number.VoiceFallbackMethod) > 0 {
 		changes.Add("VoiceFallbackMethod", number.VoiceFallbackMethod)
 	}
+	if len(number.VoiceApplicationSid) > 0 {
+		changes.Add("VoiceApplicationSid", number.VoiceApplicationSid)
+	}
 	if len(number.StatusCallback) > 0 {
 		changes.Add("StatusCallback", number.StatusCallback)
 	}
@@ -129,6 +132,9 @@ func UpdatePhoneNumberFields(client Client, number *IncomingPhoneNumber, voiceCa
 	}
 	if len(number.SmsFallbackMethod) > 0 {
 		changes.Add("SmsFallbackMethod", number.SmsFallbackMethod)
+	}
+	if len(number.SmsApplicationSid) > 0 {
+		changes.Add("SmsApplicationSid", number.SmsApplicationSid)
 	}
 
 	res, err := client.post(changes, "/IncomingPhoneNumbers/"+number.Sid+".json")
